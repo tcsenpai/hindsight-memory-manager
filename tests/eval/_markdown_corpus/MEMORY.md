@@ -1,0 +1,54 @@
+# MEMORY
+
+Index of all memory files. Lines are: `- [Title](file.md) — one-line hook`.
+
+- [User role: senior backend engineer](f01-user-role-senior-backend-engineer.md) — user
+- [User prefers terse explanations](f02-user-prefers-terse-explanations.md) — user
+- [User prefers vim keybindings](f03-user-prefers-vim-keybindings.md) — user
+- [User uses bun over npm](f04-user-uses-bun-over-npm.md) — user
+- [User uses uv for Python](f05-user-uses-uv-for-python.md) — user
+- [Never mock the database in integration tests](f06-never-mock-the-database-in-integration-tests.md) — feedback
+- [Never amend pushed commits](f07-never-amend-pushed-commits.md) — feedback
+- [Bundled refactor PRs are preferred](f08-bundled-refactor-prs-are-preferred.md) — feedback
+- [Profile before optimizing](f09-profile-before-optimizing.md) — feedback
+- [Avoid Helper/Util/Manager class names](f10-avoid-helper-util-manager-class-names.md) — feedback
+- [Storage engine: SQLite for local cache](f11-storage-engine-sqlite-for-local-cache.md) — project
+- [Message broker: NATS over Kafka](f12-message-broker-nats-over-kafka.md) — project
+- [API style: gRPC for internal, REST for external](f13-api-style-grpc-for-internal-rest-for-external.md) — project
+- [Q3 2026 deadline: SOC2 type 2 audit](f14-q3-2026-deadline-soc2-type-2-audit.md) — project
+- [Merge freeze before mobile release](f15-merge-freeze-before-mobile-release.md) — project
+- [Auth rewrite driven by compliance](f16-auth-rewrite-driven-by-compliance.md) — project
+- [Ana owns the ingest pipeline](f17-ana-owns-the-ingest-pipeline.md) — project
+- [Marco owns observability](f18-marco-owns-observability.md) — project
+- [Defer ESM migration until 2026 Q4](f19-defer-esm-migration-until-2026-q4.md) — project
+- [Incident 2026-03-12: rate limiter cascade](f20-incident-2026-03-12-rate-limiter-cascade.md) — project
+- [Latency dashboard for oncall](f21-latency-dashboard-for-oncall.md) — reference
+- [Pipeline bugs in Linear INGEST](f22-pipeline-bugs-in-linear-ingest.md) — reference
+- [Architecture decision records location](f23-architecture-decision-records-location.md) — reference
+- [Database failover runbook](f24-database-failover-runbook.md) — reference
+- [Status page is hosted on statuspage.io](f25-status-page-is-hosted-on-statuspage-io.md) — reference
+- [CI pipeline lives in .github/workflows](f26-ci-pipeline-lives-in-github-workflows.md) — reference
+- [Secrets stored in HashiCorp Vault](f27-secrets-stored-in-hashicorp-vault.md) — reference
+- [Always smoke-test staging before prod](f28-always-smoke-test-staging-before-prod.md) — feedback
+- [Feature flags via GrowthBook](f29-feature-flags-via-growthbook.md) — project
+- [On-call rotation is weekly](f30-on-call-rotation-is-weekly.md) — project
+- [Avoid abbreviations in identifiers](f31-avoid-abbreviations-in-identifiers.md) — feedback
+- [Never swallow exceptions silently](f32-never-swallow-exceptions-silently.md) — feedback
+- [Cuts stay cut — no resurrected code](f33-cuts-stay-cut-no-resurrected-code.md) — feedback
+- [Backend language: Python 3.12](f34-backend-language-python-3-12.md) — project
+- [Frontend stack: React 19 + Vite + Tailwind](f35-frontend-stack-react-19-vite-tailwind.md) — project
+- [Database: Postgres 16](f36-database-postgres-16.md) — project
+- [Container runtime: Podman in dev, K8s in prod](f37-container-runtime-podman-in-dev-k8s-in-prod.md) — project
+- [User in Europe/Rome timezone](f38-user-in-europe-rome-timezone.md) — user
+- [No marketing language in docs](f39-no-marketing-language-in-docs.md) — feedback
+- [Customer support tool is Zendesk](f40-customer-support-tool-is-zendesk.md) — reference
+- [Cache layer: Redis Cluster](f41-cache-layer-redis-cluster.md) — project
+- [Never log raw secrets or PII](f42-never-log-raw-secrets-or-pii.md) — feedback
+- [Code review SLA: 24h business hours](f43-code-review-sla-24h-business-hours.md) — project
+- [User prefers Sonnet for code review](f44-user-prefers-sonnet-for-code-review.md) — user
+- [Team chat is Slack workspace example.slack.com](f45-team-chat-is-slack-workspace-example-slack-com.md) — reference
+- [Reject Helm in favor of Kustomize](f46-reject-helm-in-favor-of-kustomize.md) — project
+- [No 'You are absolutely right'](f47-no-you-are-absolutely-right.md) — feedback
+- [Linting: ruff for Python, biome for JS/TS](f48-linting-ruff-for-python-biome-for-js-ts.md) — project
+- [Build only what was asked](f49-build-only-what-was-asked.md) — feedback
+- [Cloud spend tracked in Vantage](f50-cloud-spend-tracked-in-vantage.md) — reference

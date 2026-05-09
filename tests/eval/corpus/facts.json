@@ -1,0 +1,359 @@
+{
+  "_meta": {
+    "description": "Synthetic memory corpus for hindsight-vs-markdown benchmark. 50 atomic facts modeled on real project memory categories.",
+    "created": "2026-05-09",
+    "version": 1
+  },
+  "facts": [
+    {
+      "id": "F01",
+      "type": "user",
+      "tags": ["user", "role"],
+      "title": "User role: senior backend engineer",
+      "content": "User is a senior backend engineer with 8 years of Python experience and 2 years of Rust. Primary domain is distributed data pipelines."
+    },
+    {
+      "id": "F02",
+      "type": "user",
+      "tags": ["user", "preference"],
+      "title": "User prefers terse explanations",
+      "content": "User prefers terse explanations without preamble or trailing summaries. Skip pleasantries and get straight to the answer."
+    },
+    {
+      "id": "F03",
+      "type": "user",
+      "tags": ["user", "preference"],
+      "title": "User prefers vim keybindings",
+      "content": "User uses vim keybindings everywhere — IDE, shell (zsh vi-mode), browser (Vimium). Editor commands should assume vim muscle memory."
+    },
+    {
+      "id": "F04",
+      "type": "user",
+      "tags": ["user", "tooling"],
+      "title": "User uses bun over npm",
+      "content": "User has standardized on bun for all JavaScript/TypeScript projects. Never suggest npm or yarn commands."
+    },
+    {
+      "id": "F05",
+      "type": "user",
+      "tags": ["user", "tooling"],
+      "title": "User uses uv for Python",
+      "content": "User uses uv (not pip or poetry) for Python dependency management. uv pip install, uv venv, uv lock."
+    },
+    {
+      "id": "F06",
+      "type": "feedback",
+      "tags": ["feedback", "testing"],
+      "title": "Never mock the database in integration tests",
+      "content": "Integration tests must hit a real database, not mocks. Why: prior incident where mocked tests passed but the prod migration failed silently. How to apply: any test that exercises a query path uses a containerized Postgres."
+    },
+    {
+      "id": "F07",
+      "type": "feedback",
+      "tags": ["feedback", "git"],
+      "title": "Never amend pushed commits",
+      "content": "Never use git commit --amend on a commit that has been pushed. Why: forces colleagues into recovery flows. How to apply: amend only local-only HEAD; otherwise create a fixup commit."
+    },
+    {
+      "id": "F08",
+      "type": "feedback",
+      "tags": ["feedback", "code-review"],
+      "title": "Bundled refactor PRs are preferred",
+      "content": "For wide refactors in this codebase, user prefers ONE bundled PR over many small ones. Why: per-PR overhead exceeds the cognitive benefit when changes are mechanical. Validated 2026-03 after a successful 40-file rename PR."
+    },
+    {
+      "id": "F09",
+      "type": "feedback",
+      "tags": ["feedback", "performance"],
+      "title": "Profile before optimizing",
+      "content": "Never optimize without profiling first. Why: prior \"obvious\" hotspot fix turned out to be irrelevant — the real cost was DNS resolution. How to apply: py-spy or perf, then optimize."
+    },
+    {
+      "id": "F10",
+      "type": "feedback",
+      "tags": ["feedback", "naming"],
+      "title": "Avoid Helper/Util/Manager class names",
+      "content": "Don't name classes Helper, Util, Manager, or Service without a more specific qualifier. Why: those names accumulate unrelated methods and become god classes. How to apply: name by what the class IS, not what it does."
+    },
+    {
+      "id": "F11",
+      "type": "project",
+      "tags": ["project", "architecture"],
+      "title": "Storage engine: SQLite for local cache",
+      "content": "Decided 2026-02 to use SQLite for the local cache layer instead of Postgres. Why: zero-config single-process workloads dominate; the operational simplicity outweighs the loss of concurrent writers. How to apply: any new persistent state at-rest goes to SQLite unless cross-process concurrent writers are required."
+    },
+    {
+      "id": "F12",
+      "type": "project",
+      "tags": ["project", "architecture"],
+      "title": "Message broker: NATS over Kafka",
+      "content": "Chose NATS JetStream instead of Kafka for the event bus in 2026-Q1. Why: lower operational footprint, no Zookeeper dependency, sufficient throughput for our 10k msg/s ceiling."
+    },
+    {
+      "id": "F13",
+      "type": "project",
+      "tags": ["project", "architecture"],
+      "title": "API style: gRPC for internal, REST for external",
+      "content": "Internal service-to-service communication uses gRPC. External API surface (third-party integrators) is REST + OpenAPI. Decided 2025-11 to standardize. No GraphQL anywhere."
+    },
+    {
+      "id": "F14",
+      "type": "project",
+      "tags": ["project", "deadline"],
+      "title": "Q3 2026 deadline: SOC2 type 2 audit",
+      "content": "SOC2 Type 2 audit window opens 2026-07-01 and closes 2026-09-30. All access logging, encryption-at-rest, and incident response runbooks must be complete by 2026-06-15."
+    },
+    {
+      "id": "F15",
+      "type": "project",
+      "tags": ["project", "deadline"],
+      "title": "Merge freeze before mobile release",
+      "content": "Merge freeze begins 2026-06-05 for the mobile team's release cut. Non-critical PRs scheduled after that date should be flagged. Freeze lifts 2026-06-12 after release branch tag."
+    },
+    {
+      "id": "F16",
+      "type": "project",
+      "tags": ["project", "decision"],
+      "title": "Auth rewrite driven by compliance",
+      "content": "The auth middleware rewrite is driven by legal/compliance requirements around session token storage, not tech-debt cleanup. Scope decisions favor compliance over ergonomics."
+    },
+    {
+      "id": "F17",
+      "type": "project",
+      "tags": ["project", "team"],
+      "title": "Ana owns the ingest pipeline",
+      "content": "Ana is the primary maintainer of the ingest pipeline (services/ingest/). Route nontrivial questions about ingest behavior or schema decisions to her."
+    },
+    {
+      "id": "F18",
+      "type": "project",
+      "tags": ["project", "team"],
+      "title": "Marco owns observability",
+      "content": "Marco owns the observability stack (Grafana, Loki, Tempo). Any change to log format, metric naming, or trace span structure goes through him."
+    },
+    {
+      "id": "F19",
+      "type": "project",
+      "tags": ["project", "decision"],
+      "title": "Defer ESM migration until 2026 Q4",
+      "content": "Deferred the CommonJS-to-ESM migration to 2026-Q4. Why: too many vendored dependencies still ship CJS-only; revisit when the long tail crosses 50% ESM."
+    },
+    {
+      "id": "F20",
+      "type": "project",
+      "tags": ["project", "incident"],
+      "title": "Incident 2026-03-12: rate limiter cascade",
+      "content": "Incident 2026-03-12: a misconfigured rate limiter on the auth endpoint cascaded into a 47-minute partial outage. Root cause: missing per-tenant bucket; one noisy tenant exhausted the global pool. Fix: per-tenant token buckets shipped 2026-03-15."
+    },
+    {
+      "id": "F21",
+      "type": "reference",
+      "tags": ["reference", "monitoring"],
+      "title": "Latency dashboard for oncall",
+      "content": "The Grafana board at grafana.internal/d/api-latency is the oncall watch dashboard. Touching request handling means watching this for at least 30 minutes after deploy. Alert threshold: p99 > 800ms for 5 minutes."
+    },
+    {
+      "id": "F22",
+      "type": "reference",
+      "tags": ["reference", "tracking"],
+      "title": "Pipeline bugs in Linear INGEST",
+      "content": "Pipeline-related bugs are tracked in the Linear project named INGEST. Backend bugs unrelated to pipelines go to BE."
+    },
+    {
+      "id": "F23",
+      "type": "reference",
+      "tags": ["reference", "docs"],
+      "title": "Architecture decision records location",
+      "content": "All architecture decision records live in docs/decisions/ as ADR-NNNN-title.md. Index in docs/decisions/INDEX.md. New decisions need ADR before code."
+    },
+    {
+      "id": "F24",
+      "type": "reference",
+      "tags": ["reference", "runbook"],
+      "title": "Database failover runbook",
+      "content": "The database failover runbook is at runbooks/db-failover.md. Tested quarterly; last tested 2026-02-08. Estimated RTO: 4 minutes."
+    },
+    {
+      "id": "F25",
+      "type": "reference",
+      "tags": ["reference", "external"],
+      "title": "Status page is hosted on statuspage.io",
+      "content": "Public status page at status.example.com is hosted via statuspage.io. Component updates require login at manage.statuspage.io with the shared 1Password entry \"statuspage-admin\"."
+    },
+    {
+      "id": "F26",
+      "type": "reference",
+      "tags": ["reference", "ci"],
+      "title": "CI pipeline lives in .github/workflows",
+      "content": "All CI runs through GitHub Actions, configured under .github/workflows/. Required check is named \"ci/main\". Branch protection requires green ci/main + 1 approval."
+    },
+    {
+      "id": "F27",
+      "type": "reference",
+      "tags": ["reference", "secrets"],
+      "title": "Secrets stored in HashiCorp Vault",
+      "content": "Secrets live in HashiCorp Vault at vault.internal:8200. Path convention: secret/data/{env}/{service}/{key}. Local development uses .envrc + direnv, never committed."
+    },
+    {
+      "id": "F28",
+      "type": "feedback",
+      "tags": ["feedback", "deployment"],
+      "title": "Always smoke-test staging before prod",
+      "content": "Every prod deployment must be preceded by a successful staging smoke test (the script at scripts/smoke.sh). Why: caught a broken migration path in 2026-01 that would have hit prod otherwise."
+    },
+    {
+      "id": "F29",
+      "type": "project",
+      "tags": ["project", "policy"],
+      "title": "Feature flags via GrowthBook",
+      "content": "All new features ship behind GrowthBook flags. Flag naming: feature.{team}.{name}. Rollout default: 0%, then 10/50/100 over 3 days. Flag cleanup obligation: remove within 30 days of 100% rollout."
+    },
+    {
+      "id": "F30",
+      "type": "project",
+      "tags": ["project", "policy"],
+      "title": "On-call rotation is weekly",
+      "content": "On-call rotation is weekly, Monday 09:00 to next Monday 09:00 in Europe/Rome time. Handoff requires a written summary in #oncall-handoff. Page response SLA: 5 minutes."
+    },
+    {
+      "id": "F31",
+      "type": "feedback",
+      "tags": ["feedback", "code-style"],
+      "title": "Avoid abbreviations in identifiers",
+      "content": "Don't abbreviate identifiers. user_count not usr_cnt, transaction not txn (except in well-established domain context like SQL transactions). Reading speed beats typing speed."
+    },
+    {
+      "id": "F32",
+      "type": "feedback",
+      "tags": ["feedback", "errors"],
+      "title": "Never swallow exceptions silently",
+      "content": "Never use bare except: pass or catch (e) {}. Either handle the error meaningfully, log it with context, or let it propagate. Why: silent swallowing has cost us debugging hours multiple times."
+    },
+    {
+      "id": "F33",
+      "type": "feedback",
+      "tags": ["feedback", "refactoring"],
+      "title": "Cuts stay cut — no resurrected code",
+      "content": "When code is removed, it stays removed. Don't restore deleted modules \"just in case\" without a current consumer. Why: dead code rot is harder to fix than re-deriving needed code from git history."
+    },
+    {
+      "id": "F34",
+      "type": "project",
+      "tags": ["project", "stack"],
+      "title": "Backend language: Python 3.12",
+      "content": "Backend services use Python 3.12. Pinned in pyproject.toml. No 3.11 syntax that breaks 3.12, no 3.13 features that aren't backported. Mypy strict mode."
+    },
+    {
+      "id": "F35",
+      "type": "project",
+      "tags": ["project", "stack"],
+      "title": "Frontend stack: React 19 + Vite + Tailwind",
+      "content": "Frontend uses React 19 with Vite as the bundler and Tailwind CSS v4 for styling. State management: Zustand (no Redux). Routing: TanStack Router."
+    },
+    {
+      "id": "F36",
+      "type": "project",
+      "tags": ["project", "stack"],
+      "title": "Database: Postgres 16",
+      "content": "Postgres 16 is the primary database. Migrations managed via Alembic for Python services, sqlx-cli for Rust services. No ORM beyond SQLAlchemy Core (no ORM relationships)."
+    },
+    {
+      "id": "F37",
+      "type": "project",
+      "tags": ["project", "stack"],
+      "title": "Container runtime: Podman in dev, K8s in prod",
+      "content": "Local development uses Podman (Docker Desktop banned for licensing reasons). Production runs on Kubernetes 1.30 in EKS."
+    },
+    {
+      "id": "F38",
+      "type": "user",
+      "tags": ["user", "background"],
+      "title": "User in Europe/Rome timezone",
+      "content": "User is in Europe/Rome (CET/CEST). Standard working hours 09:00-18:00 local. Async-friendly outside those windows."
+    },
+    {
+      "id": "F39",
+      "type": "feedback",
+      "tags": ["feedback", "writing"],
+      "title": "No marketing language in docs",
+      "content": "Documentation must avoid marketing language. Use \"untested\", \"MVP\", \"needs validation\" instead of \"production-ready\", \"battle-tested\", \"enterprise-grade\". Why: false confidence misleads readers and rots trust."
+    },
+    {
+      "id": "F40",
+      "type": "reference",
+      "tags": ["reference", "external"],
+      "title": "Customer support tool is Zendesk",
+      "content": "Customer support tickets live in Zendesk at support.example.com. SDK-related tickets get auto-tagged \"sdk\" and routed to the platform team."
+    },
+    {
+      "id": "F41",
+      "type": "project",
+      "tags": ["project", "architecture"],
+      "title": "Cache layer: Redis Cluster",
+      "content": "Redis Cluster (6 nodes, 3 primaries / 3 replicas) for the hot cache. TTL convention: 5 minutes for read-through caches, 1 hour for computed aggregates. No long-lived keys without an explicit eviction story."
+    },
+    {
+      "id": "F42",
+      "type": "feedback",
+      "tags": ["feedback", "security"],
+      "title": "Never log raw secrets or PII",
+      "content": "Never log raw secret values, API keys, tokens, or PII fields (email, phone, address). Use structured logging with explicit field redaction. Repeat offense triggers a postmortem."
+    },
+    {
+      "id": "F43",
+      "type": "project",
+      "tags": ["project", "policy"],
+      "title": "Code review SLA: 24h business hours",
+      "content": "Code review SLA is 24 business hours from PR-ready (CI green, description complete). After 24h the author may merge with one self-approval if the change is non-architectural."
+    },
+    {
+      "id": "F44",
+      "type": "user",
+      "tags": ["user", "preference"],
+      "title": "User prefers Sonnet for code review",
+      "content": "For code review tasks the user prefers Claude Sonnet over Opus. Why: faster turnaround, sufficient quality for review-style tasks. Reserve Opus for architecture and debugging."
+    },
+    {
+      "id": "F45",
+      "type": "reference",
+      "tags": ["reference", "team"],
+      "title": "Team chat is Slack workspace example.slack.com",
+      "content": "Team chat: Slack workspace example.slack.com. Channels: #eng-general (default), #incidents (oncall), #releases (deployment notifications), #oncall-handoff (weekly handoffs)."
+    },
+    {
+      "id": "F46",
+      "type": "project",
+      "tags": ["project", "decision"],
+      "title": "Reject Helm in favor of Kustomize",
+      "content": "K8s manifests use Kustomize, not Helm. Decided 2025-09 after Helm's templating proved hard to debug at scale. Base + overlays per environment in deploy/k8s/."
+    },
+    {
+      "id": "F47",
+      "type": "feedback",
+      "tags": ["feedback", "communication"],
+      "title": "No 'You are absolutely right'",
+      "content": "Never start a reply with \"You are absolutely right\" or similar sycophantic openers. Wastes tokens, performative, undermines actual agreement when warranted."
+    },
+    {
+      "id": "F48",
+      "type": "project",
+      "tags": ["project", "decision"],
+      "title": "Linting: ruff for Python, biome for JS/TS",
+      "content": "Lint stack: ruff for all Python (replaces flake8/isort/black). Biome for JavaScript and TypeScript (replaces ESLint and Prettier). Pre-commit enforced; CI re-runs."
+    },
+    {
+      "id": "F49",
+      "type": "feedback",
+      "tags": ["feedback", "scope"],
+      "title": "Build only what was asked",
+      "content": "Build only what's asked. No speculative features, no hypothetical-future abstractions. MVP first; iterate based on real use, not imagined needs."
+    },
+    {
+      "id": "F50",
+      "type": "reference",
+      "tags": ["reference", "billing"],
+      "title": "Cloud spend tracked in Vantage",
+      "content": "AWS and GCP spend tracked in Vantage at app.vantage.sh. Monthly review meeting first Tuesday of each month. Cost allocation tags required: team, service, environment."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+# Global configuration for the hindsight-memory skill.
+# A repo-local file at <repo>/.hindsight-memory.yaml overrides any key
+# specified here, leaving the rest at these defaults.
+#
+# Edit freely. Reload happens at session start (bootstrap) and on every
+# slash-command invocation. No watcher.
+
+recall:
+  # Budget and token cap for routine task-start recalls (parallel calls
+  # against project bank + coding-knowledge). Most recalls.
+  routine_budget: low          # low | mid | high
+  routine_max_tokens: 1024
+
+  # When the user explicitly asks "what do you remember about X" — use
+  # a wider budget for a thorough answer.
+  ask_budget: high
+  ask_max_tokens: 4096
+
+  # Pre-retain dedup checks — keep tight.
+  dedup_budget: low
+  dedup_max_tokens: 512
+
+logging:
+  # Log every recall call to a file (one line per call). Off by default
+  # because most users won't need it. Turn on per-repo to debug.
+  log_recall_stats: false
+  log_path: ~/.claude/hindsight-memory.log
+
+branches:
+  # Add `branch:<current-branch>` to every project-bank retain.
+  # coding-knowledge retains are NEVER branch-tagged.
+  tag_retains: true
+
+  # Tag used when git can't determine the branch (detached HEAD, etc.).
+  unknown_tag: branch:UNKNOWN
+
+prune:
+  # Memories untouched longer than this become candidates for `prune`.
+  default_age_days: 30
+
+  # During `prune`, also flag memories whose `branch:*` tag points to a
+  # branch that no longer exists locally OR on origin.
+  check_branches: true
+
+  # Branch tags in this list are NEVER flagged as dead during prune,
+  # even if the branch isn't currently checked out locally. Long-lived
+  # branches like main/master/develop should always be protected.
+  # Stored as a comma-separated string so the shell loader can parse
+  # it without YAML array support.
+  protected_branches: "main,master,develop,dev,trunk"
+
+  # During `prune`, also flag memories tagged `myc-task:N` whose
+  # Mycelium task is closed and older than `closed_task_age_days`.
+  # Silently skipped if `myc` is not installed.
+  check_mycelium: true
+
+  # How long after a Mycelium task closes before its memories become
+  # prune candidates. Aggressive default — closed work goes stale fast.
+  closed_task_age_days: 3
+
+mycelium:
+  # When retaining a session-summary memory (end-of-session, big work
+  # chunks), inline a `myc summary --format json` snapshot in the
+  # retain content for cross-reference. Off by default — opt-in.
+  # Silently skipped if `myc` is not installed.
+  snapshot_in_sessions: false
