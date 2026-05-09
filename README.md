@@ -206,8 +206,11 @@ must exist; then per-repo `.bank` must not contain `enabled: false`.
 | `[hm err:no-yq]` | `yq` missing AND a config file exists (config silently ignored) |
 
 Errors stack with the bank name (e.g., `[hm coding-foo err:stale]`) so
-no info is hidden. The statusline reads `/tmp` marker files only — it
-never calls MCP, so it adds zero latency per prompt.
+no info is hidden. The statusline reads `/tmp` marker files for most
+state and does a single 300ms-budget HTTP probe against the configured
+Hindsight URL to detect `err:no-mcp` live (a stale marker no longer
+produces false positives — the probe is authoritative and clears the
+marker when the server is reachable).
 
 ## Configuration
 
@@ -223,14 +226,43 @@ then to hardcoded defaults. See `skill/hindsight-memory.yaml.example`
 for the full schema (recall budgets, branch tagging, prune thresholds,
 logging).
 
+## Benchmark
+
+There's a small empirical comparison between this skill (Hindsight-backed
+recall) and Claude Code's default markdown auto-memory in
+[`tests/eval/`](tests/eval/). 50 synthetic facts, 20 ground-truth queries,
+retrieval-only metrics (no end-to-end QA). Headline numbers:
+
+| | Tokens/query (mean) | Recall@5 (avg, non-adversarial) | Adversarial behavior |
+|---|---:|---:|---|
+| Markdown | 1450 | 0.475 | Returns nothing when no keywords match (good) |
+| Hindsight | 1001 | 0.767 | Always returns top semantic-nearest items, even when nothing relevant exists (bad) |
+
+Hindsight uses ~31% fewer tokens per query and gets ~61% higher recall@5
+on real-world query types (paraphrase, indirect, multi-fact). The token
+gap is the *minimum* gap — it widens with corpus size since markdown's
+index grows linearly while Hindsight's response stays at the budget.
+The clear cost is no concept of "not found" — adversarial queries return
+5 confidently-irrelevant memories. Full methodology, per-query data,
+caveats, and reproduction steps in [`tests/eval/RESULTS.md`](tests/eval/RESULTS.md).
+
+> N=20 is a smoke test, not a published result. Treat as motivating
+> evidence, not statistical proof. The accompanying
+> [`tests/eval/RESEARCH.md`](tests/eval/RESEARCH.md) frames the
+> methodology against LongMemEval / LoCoMo / MemoryArena.
+
 ## Further reading
 
+- [`tests/eval/RESULTS.md`](tests/eval/RESULTS.md) — benchmark results
+  and per-query breakdown
+- [`tests/eval/RESEARCH.md`](tests/eval/RESEARCH.md) — methodology
+  background and field literature
 - `EXPLANATION.md` — design rationale, activation flow, why three layers
-  of hooks, comparison with the default markdown auto-memory.
+  of hooks, comparison with the default markdown auto-memory
 - `skill/SKILL.md` — the full behavioral spec Claude reads. Authoritative.
 - `skill/README.md` — operator guide for the installed skill (covers
-  failure modes, common ops).
-- `skill/hindsight-memory-operations.md` — slash command reference.
+  failure modes, common ops)
+- `skill/hindsight-memory-operations.md` — slash command reference
 
 ## License
 
